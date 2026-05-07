@@ -46,11 +46,15 @@ with col4:
     st.plotly_chart(fig2, use_container_width=True)
 
 with col5:
-    st.subheader("Распределение зарплат (от, RUB)")
-    salary_df = filtered_df[filtered_df["currency"] == "RUR"].dropna(subset=["salary_from"])
-    salary_df = salary_df[salary_df["salary_from"] < 500000] 
-    fig3 = px.histogram(salary_df, x="salary_from", nbins=30, color_discrete_sequence=["#00b4d8"])
-    st.plotly_chart(fig3, use_container_width=True)
+    st.subheader("Распределение зарплат (от)")
+    salary_df = filtered_df.dropna(subset=["salary_from"])
+    salary_df = salary_df[(salary_df["salary_from"] > 0) & (salary_df["salary_from"] < 500000)] 
+    
+    if not salary_df.empty:
+        fig3 = px.histogram(salary_df, x="salary_from", nbins=30, color_discrete_sequence=["#00b4d8"])
+        st.plotly_chart(fig3, use_container_width=True)
+    else:
+        st.warning("В собранных данных не оказалось указанных зарплат для построения графика.")
 
 st.subheader("Последние добавленные вакансии")
 st.dataframe(filtered_df[["name", "employer", "area", "salary_from", "published_at"]].sort_values(by="published_at", ascending=False).head(50), use_container_width=True)
