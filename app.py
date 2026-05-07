@@ -11,7 +11,7 @@ def load_data():
 
 df = load_data()
 
-st.title("Dashboard: 5000+ вакансий в IT и Data Science")
+st.title("Dashboard: 5000 вакансий в IT и Data Science")
 st.markdown("Данные собраны с помощью API jsearch")
 
 st.sidebar.header("Фильтры")
@@ -46,7 +46,7 @@ with col4:
     st.plotly_chart(fig2, use_container_width=True)
 
 with col5:
-    st.subheader("Распределение зарплат (от)")
+    st.subheader("Распределение зарплат")
     salary_df = filtered_df.dropna(subset=["salary_from"])
     salary_df = salary_df[(salary_df["salary_from"] > 0) & (salary_df["salary_from"] < 500000)] 
     
